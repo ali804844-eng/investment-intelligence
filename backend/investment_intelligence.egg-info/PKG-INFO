@@ -1,0 +1,24 @@
+Metadata-Version: 2.4
+Name: investment-intelligence
+Version: 0.1.0
+Summary: AI Portfolio Command Center - backend API, research agent and worker
+Requires-Python: >=3.11
+Requires-Dist: fastapi>=0.115
+Requires-Dist: uvicorn[standard]>=0.30
+Requires-Dist: sqlalchemy>=2.0.30
+Requires-Dist: alembic>=1.13
+Requires-Dist: psycopg[binary]>=3.2
+Requires-Dist: pydantic>=2.7
+Requires-Dist: pydantic-settings>=2.3
+Requires-Dist: argon2-cffi>=23.1
+Requires-Dist: pyjwt>=2.8
+Requires-Dist: httpx>=0.27
+Requires-Dist: numpy>=1.26
+Requires-Dist: pandas>=2.2
+Requires-Dist: anthropic>=0.40
+Requires-Dist: cryptography>=42
+Requires-Dist: python-multipart>=0.0.9
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: pytest-cov>=5; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"

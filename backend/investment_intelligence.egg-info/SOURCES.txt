@@ -1,0 +1,6 @@
+pyproject.toml
+investment_intelligence.egg-info/PKG-INFO
+investment_intelligence.egg-info/SOURCES.txt
+investment_intelligence.egg-info/dependency_links.txt
+investment_intelligence.egg-info/requires.txt
+investment_intelligence.egg-info/top_level.txt
