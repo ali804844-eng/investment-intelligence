@@ -20,6 +20,8 @@ from app.models import AuditLog, User
 COOKIE_NAME = "ii_session"
 CSRF_HEADER = "x-requested-with"
 _ph = PasswordHasher()
+# Real argon2 hash of a random value: verifying unknown-user logins against it costs the same time as a real check.
+DUMMY_HASH = _ph.hash("timing-equalisation-placeholder")
 
 
 def hash_password(pw: str) -> str:

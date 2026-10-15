@@ -113,3 +113,20 @@ def test_safety_wrapping():
     assert "<system>" not in w["text"]
     assert injection_flags("Revenue grew 5%") == []
     assert clean_text("a\x00b\x1bc") == "abc"
+
+
+def test_report_narrative_uses_llm_when_configured(llm_user, monkeypatch):
+    from app.agent import llm
+
+    c, _ = llm_user
+    seen = {}
+
+    def fake_complete(db, user_id, prompt, max_tokens=2000):
+        seen["prompt"] = prompt
+        return "Narrative grounded in the report data. SAMPLE company."
+
+    monkeypatch.setattr(llm, "complete_text", fake_complete)
+    r = c.post("/api/research/reports", json={"symbol": "WWIM"}).json()
+    assert r["narrative_by"] == "claude-opus-5-5"
+    assert r["sections"]["narrative"].startswith("Narrative grounded")
+    assert "Use ONLY the facts" in seen["prompt"] and "dcf_value_per_share" in seen["prompt"]

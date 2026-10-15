@@ -1,0 +1,49 @@
+# Production-style stack: PostgreSQL + one-shot migrations + API (serves the SPA) + background research worker.
+# Usage:  cp .env.example .env  (edit secrets)  &&  docker compose up -d --build
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ii
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ii
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ii"]
+      interval: 5s
+      retries: 20
+    restart: unless-stopped
+
+  migrate:
+    build: .
+    command: ["alembic", "upgrade", "head"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://ii:${POSTGRES_PASSWORD}@db:5432/ii
+    depends_on:
+      db: { condition: service_healthy }
+    restart: "no"
+
+  api:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://ii:${POSTGRES_PASSWORD}@db:5432/ii
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    ports: ["127.0.0.1:8000:8000"]   # put a TLS-terminating reverse proxy in front for remote access
+    restart: unless-stopped
+
+  worker:
+    build: .
+    command: ["python", "-m", "app.worker.runner"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://ii:${POSTGRES_PASSWORD}@db:5432/ii
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    restart: unless-stopped
+    stop_grace_period: 60s
+
+volumes:
+  pgdata:

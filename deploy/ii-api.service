@@ -1,0 +1,18 @@
+[Unit]
+Description=Investment Intelligence API
+After=network-online.target postgresql.service
+
+[Service]
+User=ii
+WorkingDirectory=/opt/investment-intelligence/backend
+EnvironmentFile=/opt/investment-intelligence/.env
+ExecStartPre=/opt/investment-intelligence/backend/.venv/bin/alembic upgrade head
+ExecStart=/opt/investment-intelligence/backend/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --proxy-headers
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/tmp
+
+[Install]
+WantedBy=multi-user.target

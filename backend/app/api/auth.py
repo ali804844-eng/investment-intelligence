@@ -12,6 +12,7 @@ from app.db import get_db, utcnow
 from app.models import User
 from app.security import (
     COOKIE_NAME,
+    DUMMY_HASH,
     audit,
     check_lockout,
     client_ip,
@@ -89,7 +90,7 @@ def register(body: RegisterIn, request: Request, response: Response, db: Session
 def login(body: LoginIn, request: Request, response: Response, db: Session = Depends(get_db)):
     u = db.scalar(select(User).where(func.lower(User.email) == body.email.lower()))
     if u is None:
-        verify_password(body.password, "$argon2id$v=19$m=65536,t=3,p=4$c2FsdHNhbHQ$aGFzaGhhc2hoYXNoaGFzaA")  # timing equalisation
+        verify_password(body.password, DUMMY_HASH)  # timing equalisation for unknown emails
         raise HTTPException(401, "Invalid email or password")
     check_lockout(u)
     if not verify_password(body.password, u.password_hash) or not u.is_active:

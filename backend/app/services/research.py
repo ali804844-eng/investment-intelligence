@@ -155,14 +155,14 @@ def auto_valuation(db: Session, sec: Security, overrides: dict | None = None) ->
         r = max(wacc_detail["wacc"], tg + 0.02)
         assumptions += [
             {"name": "Risk-free rate", "value": rf, "basis": rf_basis},
-            {"name": "Beta", "value": b_used, "basis": f"2y daily regression vs benchmark ({beta:.2f}), clamped [0.6, 2.0]" if beta is not None else "default 1.0"},
+            {"name": "Beta", "value": b_used, "fmt": "x", "basis": f"2y daily regression vs benchmark ({beta:.2f}), clamped [0.6, 2.0]" if beta is not None else "default 1.0"},
             {"name": "Equity risk premium", "value": erp, "basis": "assumption"},
             {"name": "Discount rate (WACC)", "value": r, "basis": "WACC = E/V·(rf+β·ERP) + D/V·kd·(1−21%) (floored at g+2%)"},
         ]
     years = int(overrides.get("years", 5))
     path = [g0 + (tg - g0) * i / years for i in range(years)]
     base_fcf = float(np.mean(fcfs))
-    assumptions.append({"name": "Base FCF", "value": base_fcf, "basis": f"average of last {len(fcfs)} fiscal years (OCF − capex)"})
+    assumptions.append({"name": "Base FCF", "value": base_fcf, "fmt": "money", "basis": f"average of last {len(fcfs)} fiscal years (OCF − capex)"})
     net_debt = debt - (cash or 0)
     kw = dict(base_fcf=base_fcf, growth_rates=path, discount_rate=r, terminal_growth=tg, net_debt=net_debt,
               shares_outstanding=shares)
@@ -236,7 +236,8 @@ def calibration_confidence(db: Session, user_id: int) -> dict:
 
 
 def generate_report(db: Session, user_id: int, sec: Security, horizon: str = "long", strategy_key: str | None = None,
-                    portfolio_id: int | None = None, created_by: str = "user", register_prediction: bool = True) -> ResearchReport:
+                    portfolio_id: int | None = None, created_by: str = "user", register_prediction: bool = True,
+                    narrate: bool = True) -> ResearchReport:
     ov = security_overview(db, sec)
     val = auto_valuation(db, sec) if sec.asset_class == "equity" else {"available": False, "reasons": ["Not an operating company"]}
     regime = market_regime(db)
@@ -393,17 +394,46 @@ def generate_report(db: Session, user_id: int, sec: Security, horizon: str = "lo
         "reconsider_if": invalidation + ["New filings materially change revenue, margins or leverage",
                                          "Price moves enough to change the margin of safety by more than 15 points"],
     }
+    narrative_by = "deterministic"
+    if narrate:
+        text = _narrative(db, user_id, sections)
+        if text:
+            sections["narrative"] = text
+            from app.config import get_settings
+
+            narrative_by = get_settings().anthropic_model
     rep = ResearchReport(user_id=user_id, security_id=sec.id, horizon=horizon,
                          title=f"{sec.symbol}: {title_c}", conclusion=conclusion,
                          confidence=calib.get("hit_rate") if calib.get("calibrated") else None,
                          sections=_jsonable(sections), sources=_jsonable(sources), calculations=_jsonable(calcs),
                          data_quality="sample" if sec.is_sample else (q.get("quality") or "unknown"),
-                         model_version=MODEL_VERSION, created_by=created_by)
+                         model_version=MODEL_VERSION, created_by=created_by, narrative_by=narrative_by)
     db.add(rep)
     db.flush()
     if register_prediction and conclusion in ("consider", "reject") and q["price"] is not None:
         register_report_prediction(db, user_id, sec, rep, conclusion, strength, horizon)
     return rep
+
+
+def _narrative(db: Session, user_id: int, sections: dict) -> str | None:
+    """Optional LLM-written narrative grounded strictly in the report's own computed data (no tools, no new facts)."""
+    from app.agent.llm import complete_text, llm_configured
+
+    if not llm_configured():
+        return None
+    import json
+
+    data = {k: sections[k] for k in ("executive_summary", "thesis", "evidence", "risks", "counterarguments", "data_limitations",
+                                     "horizon", "confidence") if k in sections}
+    val = sections.get("valuation") or {}
+    if val.get("available"):
+        data["valuation"] = {"dcf_value_per_share": val["dcf"]["value_per_share"], "price": val["price"],
+                             "scenarios": {k: v["value_per_share"] for k, v in val["scenarios"]["scenarios"].items()},
+                             "assumptions": val["assumptions"]}
+    prompt = ("Write a concise narrative (max 180 words) for this research report. Use ONLY the facts and numbers in the "
+              "JSON below; do not add any external facts, numbers or recommendations. State the main uncertainty and what "
+              "would change the conclusion. If data is SAMPLE, say so.\n\n" + json.dumps(_jsonable(data), default=str)[:20000])
+    return complete_text(db, user_id, prompt, max_tokens=1500)
 
 
 def register_report_prediction(db: Session, user_id: int, sec: Security, rep: ResearchReport, conclusion: str,

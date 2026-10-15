@@ -292,3 +292,23 @@ def export_csv(symbol: str, user: User = Depends(get_current_user), db: Session 
     buf.seek(0)
     return StreamingResponse(iter([buf.getvalue()]), media_type="text/csv",
                              headers={"Content-Disposition": f'attachment; filename="{s.symbol}_statements.csv"'})
+
+
+@router.get("/screener/setups")
+def scan_setups(include_sample: bool | None = None, costs_bps: float = 15.0, user: User = Depends(get_current_user),
+                db: Session = Depends(get_db)):
+    """Scan equities/ETFs for active short-term setups. An empty result is a valid, honest outcome."""
+    from app.core.screening import setups as st
+
+    real = db.scalar(select(Security.id).where(Security.is_sample.is_(False), Security.asset_class == "equity").limit(1))
+    sample = include_sample if include_sample is not None else real is None
+    out = []
+    scanned = 0
+    for s in db.scalars(select(Security).where(Security.is_sample.is_(sample), Security.asset_class.in_(["equity", "etf"]))).all():
+        o = research.ohlcv(db, s.id, 1500)
+        scanned += 1
+        for x in st.detect(o, costs_bps, research.upcoming_events(db, s.id)):
+            out.append({"symbol": s.symbol, "name": s.name, "is_sample": s.is_sample, "sector": s.sector, **x})
+    out.sort(key=lambda r: (-(r["historical"].get("n") or 0)))
+    return {"scanned": scanned, "universe": "SAMPLE" if sample else "real", "setups": out,
+            "note": "Setups are hypotheses with explicit invalidation levels, not recommendations. None may be active."}

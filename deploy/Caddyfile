@@ -1,0 +1,6 @@
+# TLS-terminating reverse proxy (automatic HTTPS via Let's Encrypt). Replace the domain.
+invest.example.com {
+	encode gzip
+	reverse_proxy 127.0.0.1:8000
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+}
