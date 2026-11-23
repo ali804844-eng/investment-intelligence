@@ -1,0 +1,515 @@
+<meta name="dash-one-writer">
+<style>
+  .ip { direction: rtl; font-family: var(--font-anthropic-sans), "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif; display: grid; gap: var(--cds-gap-xl); color: var(--color-fg); }
+  .ip h1 { font-family: var(--font-anthropic-serif), "Noto Naskh Arabic", serif; font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .ip h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; text-wrap: balance; }
+  .ip p { margin: 0; line-height: 1.7; max-width: 70ch; }
+  .ip .muted { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .ip .num { font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; display: inline-block; }
+  .ip .lede { font-size: var(--cds-font-size-heading); line-height: 1.8; }
+  .ip .lede b { font-weight: var(--cds-font-weight-medium); }
+  .ip .eyebrow { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .02em; }
+  .ip .head { display: grid; gap: var(--cds-gap-sm); }
+  .ip .card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-md); min-width: 0; }
+  .ip .sec { display: grid; gap: var(--cds-gap-md); min-width: 0; }
+  .ip .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--cds-gap-md); }
+  .ip .tile { display: grid; gap: var(--cds-gap-xs); align-content: start; }
+  .ip .tile .big { font-family: var(--font-anthropic-serif), serif; font-weight: 400; font-size: 2rem; line-height: 1.1; font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; justify-self: start; }
+  .ip .good { color: var(--color-ok); } .ip .bad { color: var(--color-bad); }
+  .ip .winner { border-color: var(--color-ok); }
+  .ip .badge { display: inline-flex; align-items: center; gap: 6px; font-size: var(--cds-font-size-caption); padding: 2px 10px; border-radius: 999px; border: 1px solid var(--color-border-line); color: var(--color-fg-muted); justify-self: start; }
+  .ip .badge.ok { color: var(--color-ok); border-color: var(--color-ok); }
+  .ip .chart { position: relative; min-height: 300px; direction: ltr; }
+  .ip .chart.sm { min-height: 220px; }
+  .ip .chart svg { display: block; overflow: visible; }
+  .ip .chart text { font-size: 11px; fill: var(--cds-text-secondary); }
+  .ip .chart .axis path, .ip .chart .axis line { stroke: var(--cds-chart-axis); }
+  .ip .chart .grid line { stroke: var(--cds-chart-grid); }
+  .ip .chart .grid path { display: none; }
+  .ip .tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: 8px 10px; font-size: var(--cds-font-size-caption); direction: rtl; min-width: 160px; z-index: 5; }
+  .ip .tip .row { display: flex; justify-content: space-between; gap: 12px; }
+  .ip .tip .sw { display: inline-block; width: 10px; height: 3px; border-radius: 2px; margin-inline-end: 6px; vertical-align: middle; }
+  .ip .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--cds-gap-lg); }
+  .ip .tbl { overflow-x: auto; }
+  .ip table { border-collapse: collapse; width: 100%; font-size: var(--cds-font-size-body); }
+  .ip th { text-align: start; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); padding: 8px 10px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .ip td { padding: 9px 10px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .ip td.n, .ip th.n { text-align: end; font-variant-numeric: tabular-nums; }
+  .ip td.n { direction: ltr; unicode-bidi: plaintext; }
+  .ip tbody tr { cursor: pointer; }
+  .ip tbody tr:hover { background: color-mix(in srgb, var(--color-fg) 5%, transparent); }
+  .ip tbody tr.sel { background: color-mix(in srgb, var(--color-ok) 12%, transparent); }
+  .ip .bar { display: inline-block; height: 8px; border-radius: 4px; vertical-align: middle; }
+  .ip .fam { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .ip .ctrl { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cds-gap-sm); }
+  .ip .legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .ip .legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; margin-inline-end: 6px; vertical-align: middle; }
+  .ip .steps { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 6px; line-height: 1.7; }
+  .ip details { border-top: 1px solid var(--color-border-line); padding-top: var(--cds-pad-md); }
+  .ip details summary { cursor: pointer; font-weight: var(--cds-font-weight-medium); }
+  .ip details ul { line-height: 1.8; padding-inline-start: 1.2em; }
+  .ip .hm { display: grid; gap: 4px; direction: ltr; }
+  .ip .hm .c { border-radius: 6px; padding: 10px 4px; text-align: center; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-caption); position: relative; }
+  .ip .hm .c.me { outline: 2px solid var(--color-fg); outline-offset: -2px; }
+  .ip .hm .lab { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-align: center; align-self: center; }
+  .ip .warnbox { border-inline-start: 3px solid var(--color-warn); padding: var(--cds-pad-sm) var(--cds-pad-md); background: color-mix(in srgb, var(--color-warn) 8%, transparent); border-radius: var(--cds-radius); }
+</style>
+
+<div class="ip" data-read lang="ar">
+
+  <header class="head" id="top">
+    <span class="eyebrow">اختبار خلفي · آخر 52 أسبوعاً (17 نوفمبر 2025 – 16 نوفمبر 2026) · 13 سهماً وصندوقاً متوافقاً مع الشريعة · 20 استراتيجية</span>
+    <h1>محفظة الأسهم والصناديق الإسلامية العالمية</h1>
+    <p class="lede">الاستراتيجية الأفضل أداءً خلال السنة الماضية هي <b data-draw="w-name" data-source="strategies" data-field="name" data-where="rank=1">—</b>، وحققت عائداً قدره <b class="num good" data-draw="w-total" data-source="strategies" data-field="total" data-where="rank=1">—</b> بعد التكاليف، مقابل <b class="num" data-draw="b-total" data-source="strategies" data-field="total" data-where="key=bh_spus">—</b> فقط لو اشتريت صندوق SPUS واحتفظت به.</p>
+  </header>
+
+  <section class="sec" id="winner">
+    <div class="card winner">
+      <span class="badge ok">★ الاستراتيجية الفائزة</span>
+      <h2 data-draw="w-name2" data-source="strategies" data-field="name" data-where="rank=1">—</h2>
+      <p data-draw="w-desc" data-source="strategies" data-field="desc" data-where="rank=1">—</p>
+      <div class="tiles">
+        <div class="tile">
+          <span class="muted">العائد الكلي (52 أسبوعاً)</span>
+          <span class="big" data-draw="k-total" data-source="strategies" data-field="total" data-where="rank=1">—</span>
+          <span class="muted">الفارق عن SPUS: <b class="num good" data-draw="k-edge" data-source="edge">—</b></span>
+        </div>
+        <div class="tile">
+          <span class="muted">نسبة شارب</span>
+          <span class="big" data-draw="k-sharpe" data-source="strategies" data-field="sharpe" data-where="rank=1">—</span>
+          <span class="muted">العائد الزائد لكل وحدة مخاطرة. فوق 1 تعتبر جيدة</span>
+        </div>
+        <div class="tile">
+          <span class="muted">أقصى تراجع</span>
+          <span class="big bad" data-draw="k-dd" data-source="strategies" data-field="maxdd" data-where="rank=1">—</span>
+          <span class="muted">أسوأ هبوط من قمة إلى قاع خلال السنة</span>
+        </div>
+        <div class="tile">
+          <span class="muted">التذبذب السنوي</span>
+          <span class="big" data-draw="k-vol" data-source="strategies" data-field="vol" data-where="rank=1">—</span>
+          <span class="muted">مقابل <b class="num" data-draw="k-bvol" data-source="strategies" data-field="vol" data-where="key=bh_spus">—</b> لصندوق SPUS</span>
+        </div>
+      </div>
+      <div class="two">
+        <div class="sec">
+          <h3 class="eyebrow" style="margin:0">كيف تعمل؟</h3>
+          <ol class="steps">
+            <li>كل 4 أسابيع نقيس أداء الأصول الـ13 خلال آخر 4 أسابيع.</li>
+            <li>نشتري أقوى 3 أصول بأوزان متساوية (ثلث لكل أصل).</li>
+            <li>إن لم يكن أي أصل رابحاً، ننقل المحفظة كاملة إلى صندوق الصكوك SPSK.</li>
+            <li>نكرر العملية مع خصم تكلفة تداول 0.10% على كل عملية.</li>
+          </ol>
+        </div>
+        <div class="sec" id="holdings">
+          <h3 class="eyebrow" style="margin:0">مكونات المحفظة في نهاية فترة الاختبار</h3>
+          <div class="chart sm" data-draw="holdings" data-source="holdings" style="min-height:120px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="equity">
+    <h2>نمو 100 دولار في كل استراتيجية</h2>
+    <div class="ctrl">
+      <label class="muted" for="ip-pick">قارن مع:</label>
+      <select class="dash-select" id="ip-pick" data-draw="pick" data-source="strategies" aria-label="اختر استراتيجية للمقارنة"></select>
+    </div>
+    <div class="legend" data-draw="eq-legend"></div>
+    <div class="chart" data-draw="equity" data-source="nav strategies"></div>
+    <p class="muted">الخطوط الرمادية هي بقية الاستراتيجيات. مرّر المؤشر على الرسم لقراءة القيم أسبوعاً بأسبوع.</p>
+  </section>
+
+  <section class="sec" id="board">
+    <h2>ترتيب الاستراتيجيات العشرين</h2>
+    <p class="muted">الترتيب بدرجة مركبة: 40% نسبة شارب، 30% العائد، 20% نسبة كالمار (العائد ÷ أقصى تراجع)، 10% أقصى تراجع. اضغط على أي صف لعرضه في الرسم أعلاه.</p>
+    <div class="tbl">
+      <table data-source="strategies" data-row-key="key" id="board-table">
+        <thead><tr>
+          <th data-field="rank">#</th>
+          <th data-field="name">الاستراتيجية</th>
+          <th data-field="family">النوع</th>
+          <th class="n" data-field="total">العائد</th>
+          <th></th>
+          <th class="n" data-field="sharpe">شارب</th>
+          <th class="n" data-field="maxdd">أقصى تراجع</th>
+          <th class="n" data-field="vol">التذبذب</th>
+          <th class="n" data-field="turnover">الدوران</th>
+        </tr></thead>
+        <tbody data-draw="board"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="two">
+    <div class="sec" id="riskret">
+      <h2>العائد مقابل المخاطرة</h2>
+      <p class="muted">كل نقطة استراتيجية. الأفضل أعلى اليسار: عائد أكبر بتذبذب أقل.</p>
+      <div class="chart" data-draw="scatter" data-source="strategies"></div>
+    </div>
+    <div class="sec" id="drawdown">
+      <h2>التراجعات من القمة</h2>
+      <p class="muted">كم خسرت كل محفظة من أعلى قيمة وصلت إليها.</p>
+      <div class="chart" data-draw="dd" data-source="nav"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="robust">
+    <h2>هل الفوز حظ؟ اختبار المتانة</h2>
+    <p>جرّبنا 24 تركيبة من استراتيجية الزخم بتغيير فترة القياس وعدد الأصول المختارة (مع إعادة توازن أسبوعية). تفوقت <b class="num" data-draw="r-beat" data-source="robust" data-field="beat" data-row="0">—</b> تركيبة من <b class="num" data-draw="r-n" data-source="robust" data-field="n" data-row="0">—</b> على صندوق SPUS، والوسيط بلغ <b class="num" data-draw="r-med" data-source="robust" data-field="median" data-row="0">—</b>. أفضل النتائج تتركز عند فترة القياس 4 أسابيع، ما يعني أن الإشارة حساسة للمعامل المختار.</p>
+    <div class="two">
+      <div class="card">
+        <h3 class="eyebrow" style="margin:0">العائد الكلي حسب فترة القياس (صفوف) وعدد الأصول (أعمدة)</h3>
+        <div class="hm" data-draw="heat" data-source="grid"></div>
+      </div>
+      <div class="card">
+        <h3 class="eyebrow" style="margin:0">أثر تكلفة التداول على الزخم الأسبوعي (4 أسابيع، أفضل 3)</h3>
+        <div class="chart sm" data-draw="costs" data-source="costs"></div>
+        <p class="muted">كل 0.10% إضافية في التكلفة تقتطع نحو 4.5 نقطة من العائد، لأن هذه النسخة تتداول أسبوعياً. النسخة الشهرية الفائزة تتداول أقل من نصف ذلك.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="universe">
+    <h2>مكونات المحفظة الاستثمارية</h2>
+    <p class="muted">6 صناديق إسلامية (أسهم أمريكية وعالمية وصكوك وعقار) و7 أسهم عالمية تجتاز عادةً معايير الفحص الشرعي (AAOIFI / مؤشرات داو جونز الإسلامية). الأداء لنفس فترة الاختبار.</p>
+    <div class="tbl">
+      <table data-source="assets" data-row-key="ticker" id="assets-table">
+        <thead><tr>
+          <th data-field="ticker">الرمز</th>
+          <th data-field="name">الاسم</th>
+          <th data-field="type">النوع</th>
+          <th data-field="sector">القطاع</th>
+          <th>المسار</th>
+          <th class="n" data-field="ret">العائد</th>
+          <th class="n" data-field="vol">التذبذب</th>
+          <th class="n" data-field="maxdd">أقصى تراجع</th>
+        </tr></thead>
+        <tbody data-draw="assets"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="warnbox">
+    <p><b>تنبيه مهم:</b> هذه نتائج اختبار تاريخي على سنة واحدة فقط، واختيار "الأفضل" من بين 20 استراتيجية على نفس البيانات يميل لتضخيم النتيجة. الأداء الماضي لا يضمن المستقبل، والتوافق الشرعي يجب التحقق منه دورياً لدى جهة رقابة شرعية لأن نسب الديون والإيرادات تتغير. هذا تحليل بحثي وليس توصية استثمارية.</p>
+  </div>
+
+  <details id="method">
+    <summary>المنهجية والتعريفات</summary>
+    <ul>
+      <li><b>البيانات:</b> أسعار إغلاق أسبوعية من Twelve Data من 5 مايو 2025 إلى 16 نوفمبر 2026. الأسابيع قبل 17 نوفمبر 2025 تُستخدم فقط لحساب الإشارات.</li>
+      <li><b>بلا تحيز للمستقبل:</b> القرار يُتخذ عند إغلاق الأسبوع ويُطبّق على عائد الأسبوع التالي.</li>
+      <li><b>التكاليف:</b> 0.10% على كل وحدة دوران. الدوران = مجموع التغيرات في الأوزان؛ دوران 17 يعني أن المحفظة تبدلت كلياً نحو 8 مرات.</li>
+      <li><b>نسبة شارب:</b> (العائد السنوي − 4% عائد خالٍ من المخاطر تقريبي) ÷ التذبذب السنوي.</li>
+      <li><b>الأسعار:</b> أسعار إغلاق غير معدّلة بالتوزيعات، فالعوائد لا تشمل الأرباح الموزعة (تؤثر خصوصاً على صناديق الصكوك والعقار).</li>
+      <li><b>صندوق AMANX</b> متوفر من 30 يونيو 2025 فقط؛ يدخل الحسابات منذ ذلك التاريخ.</li>
+      <li><b>بيع على المكشوف ورافعة مالية:</b> غير مستخدمة في أي استراتيجية، التزاماً بالضوابط الشرعية.</li>
+    </ul>
+  </details>
+</div>
+
+<script>
+(() => {
+  const P = d3.format('+.1%'), P0 = d3.format('.1%'), F2 = d3.format('.2f');
+  const ok = (id) => { const r = dash.data(id); return r.status === 'ok' ? r.data : null; };
+  const num = (v) => +v;
+  window.ipFmt = { P, P0, F2, ok };
+  window.ipSel = window.ipSel || 'mom_4_3';
+
+  dash.calc('edge', {
+    title: 'الفارق عن SPUS',
+    description: 'عائد الاستراتيجية الأولى ناقص عائد الشراء والاحتفاظ بـ SPUS.',
+    inputs: ['strategies'],
+    fn: (strategies) => {
+      const w = strategies.find((s) => +s.rank === 1), b = strategies.find((s) => s.key === 'bh_spus');
+      return w && b ? +w.total - +b.total : null;
+    },
+  });
+  dash.calc('robust', {
+    title: 'ملخص اختبار المتانة',
+    description: 'عدد تركيبات الزخم التي تفوقت على SPUS ووسيط عوائدها.',
+    inputs: ['grid', 'strategies'],
+    fn: (grid, strategies) => {
+      const b = strategies.find((s) => s.key === 'bh_spus');
+      const t = grid.map((g) => +g.total);
+      return [{ beat: t.filter((x) => b && x > +b.total).length, n: t.length, median: d3.median(t) }];
+    },
+  });
+
+  const textDraw = (name, src, pick, fmt) => dash.draw(name, (el) => {
+    const rows = ok(src);
+    if (!rows) { el.textContent = '—'; return; }
+    const r = pick(rows);
+    el.textContent = r == null ? '—' : fmt(r);
+  });
+  const top = (rows) => rows.find((s) => +s.rank === 1);
+  const spus = (rows) => rows.find((s) => s.key === 'bh_spus');
+  textDraw('w-name', 'strategies', (r) => top(r)?.name, String);
+  textDraw('w-name2', 'strategies', (r) => top(r)?.name, String);
+  textDraw('w-desc', 'strategies', (r) => top(r)?.desc, String);
+  textDraw('w-total', 'strategies', (r) => top(r)?.total, (v) => P(v));
+  textDraw('k-total', 'strategies', (r) => top(r)?.total, (v) => P(v));
+  textDraw('k-sharpe', 'strategies', (r) => top(r)?.sharpe, (v) => F2(v));
+  textDraw('k-dd', 'strategies', (r) => top(r)?.maxdd, (v) => P0(v));
+  textDraw('k-vol', 'strategies', (r) => top(r)?.vol, (v) => P0(v));
+  textDraw('k-bvol', 'strategies', (r) => spus(r)?.vol, (v) => P0(v));
+  textDraw('b-total', 'strategies', (r) => spus(r)?.total, (v) => P(v));
+  dash.draw('k-edge', (el) => {
+    const r = dash.data('edge');
+    el.textContent = r.status === 'ok' && r.data != null ? P(r.data) : '—';
+  });
+  const rob = (field, fmt) => (el) => {
+    const r = dash.data('robust');
+    el.textContent = r.status === 'ok' && r.data?.[0] ? fmt(r.data[0][field]) : '—';
+  };
+  dash.draw('r-beat', rob('beat', String));
+  dash.draw('r-n', rob('n', String));
+  dash.draw('r-med', rob('median', (v) => P(v)));
+})();
+</script>
+
+<script>
+(() => {
+  const { P, P0, F2, ok } = window.ipFmt;
+  const parse = d3.utcParse('%Y-%m-%d');
+  const fmtD = d3.utcFormat('%d/%m/%y');
+  const C = () => ({ win: dash.colors[0], b: dash.colors[1], sel: dash.colors[2] });
+  const fail = (el, msg) => { el.replaceChildren(); const p = document.createElement('p'); p.className = 'muted'; p.textContent = msg; el.append(p); };
+
+  // ---------- select control
+  dash.draw('pick', (sel) => {
+    const rows = ok('strategies') || [];
+    const opts = rows.filter((r) => +r.rank !== 1 && r.key !== 'bh_spus').map((r) => new Option(`${r.rank}. ${r.name}`, r.key));
+    sel.replaceChildren(...opts);
+    sel.value = window.ipSel;
+    sel.onchange = () => { window.ipSel = sel.value; dash.draw('equity'); dash.draw('eq-legend'); dash.draw('board'); dash.draw('dd'); };
+  });
+
+  dash.draw('eq-legend', (el) => {
+    const rows = ok('strategies');
+    if (!rows) { el.textContent = '—'; return; }
+    const c = C();
+    const w = rows.find((r) => +r.rank === 1), s = rows.find((r) => r.key === window.ipSel);
+    const items = [[c.win, w?.name], [c.b, 'شراء واحتفاظ – SPUS (المرجع)'], [c.sel, s?.name]];
+    el.replaceChildren(...items.filter((i) => i[1]).map(([col, t]) => {
+      const sp = document.createElement('span'); const i = document.createElement('i'); i.style.background = col; sp.append(i, document.createTextNode(t)); return sp;
+    }));
+  });
+
+  // ---------- equity chart
+  dash.draw('equity', (el) => {
+    const nav = ok('nav'), st = ok('strategies');
+    if (!nav || !st) { const s = dash.data('nav').status; if (s === 'error') fail(el, 'تعذر تحميل منحنيات الأداء.'); else el.textContent = '—'; return; }
+    el.replaceChildren();
+    const c = C();
+    const winKey = st.find((r) => +r.rank === 1).key;
+    const names = Object.fromEntries(st.map((r) => [r.key, r.name]));
+    const series = d3.groups(nav, (d) => d.key).map(([k, v]) => ({ k, v: v.map((d) => ({ t: parse(d.date), y: +d.nav })) }));
+    const W = el.clientWidth || 600, H = 320, m = { t: 12, r: 64, b: 26, l: 40 };
+    const x = d3.scaleUtc().domain(d3.extent(series[0].v, (d) => d.t)).range([m.l, W - m.r]);
+    const y = d3.scaleLinear().domain(d3.extent(nav, (d) => +d.nav)).nice().range([H - m.b, m.t]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img')
+      .attr('aria-label', 'منحنيات نمو 100 دولار لكل الاستراتيجيات خلال 52 أسبوعاً');
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat(''));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 500 ? 4 : 7).tickFormat(d3.utcFormat('%b %y')));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5));
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(100)).attr('y2', y(100)).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
+    const line = d3.line().x((d) => x(d.t)).y((d) => y(d.y));
+    const hi = { [winKey]: c.win, bh_spus: c.b, [window.ipSel]: c.sel };
+    const order = series.sort((a, b) => (hi[a.k] ? 1 : 0) - (hi[b.k] ? 1 : 0));
+    svg.append('g').selectAll('path').data(order).join('path').attr('d', (s) => line(s.v)).attr('fill', 'none')
+      .style('stroke', (s) => hi[s.k] || 'var(--cds-chart-muted)').attr('stroke-width', (s) => (hi[s.k] ? 2.4 : 1)).attr('opacity', (s) => (hi[s.k] ? 1 : 0.45));
+    // end labels, nudged apart
+    const ends = Object.keys(hi).map((k) => { const s = series.find((q) => q.k === k); return s && { k, y: y(s.v.at(-1).y), v: s.v.at(-1).y }; }).filter(Boolean).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 13) ends[i].y = ends[i - 1].y + 13;
+    svg.append('g').selectAll('text').data(ends).join('text').attr('x', W - m.r + 6).attr('y', (d) => d.y + 4)
+      .style('fill', (d) => hi[d.k]).style('font-weight', 600).text((d) => `$${d.v.toFixed(0)}`);
+    // tooltip
+    const tip = d3.select(el).append('div').attr('class', 'tip').style('display', 'none');
+    const vline = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).style('stroke', 'var(--cds-chart-axis)').style('display', 'none');
+    const dates = series[0].v.map((d) => d.t);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev); const i = Math.max(0, Math.min(dates.length - 1, d3.bisectCenter(dates, x.invert(px))));
+        const X = x(dates[i]); vline.attr('x1', X).attr('x2', X).style('display', null);
+        tip.style('display', null).replaceChildren();
+        tip.append('div').style('font-weight', 600).text(`أسبوع ${fmtD(dates[i])}`);
+        Object.entries(hi).forEach(([k, col]) => {
+          const s = series.find((q) => q.k === k); if (!s) return;
+          const r = tip.append('div').attr('class', 'row'); const a = r.append('span'); a.append('span').attr('class', 'sw').style('background', col); a.append('span').text(names[k]);
+          r.append('span').attr('class', 'num').text(`$${s.v[i].y.toFixed(1)}`);
+        });
+        const bw = el.clientWidth, tw = 230; const sx = (X / W) * bw;
+        tip.style('left', `${sx > bw / 2 ? sx - tw - 10 : sx + 10}px`).style('top', '10px');
+      })
+      .on('pointerleave', () => { tip.style('display', 'none'); vline.style('display', 'none'); });
+  });
+
+  // ---------- leaderboard table
+  dash.draw('board', (tb) => {
+    const st = ok('strategies');
+    if (!st) { tb.replaceChildren(); if (dash.data('strategies').status === 'error') { const tr = tb.insertRow(); const td = tr.insertCell(); td.colSpan = 9; td.textContent = 'تعذر تحميل جدول الاستراتيجيات.'; } return; }
+    const max = d3.max(st, (d) => Math.abs(+d.total));
+    const c = C();
+    tb.replaceChildren(...st.map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.key;
+      if (r.key === window.ipSel) tr.className = 'sel';
+      const cell = (txt, cls) => { const td = document.createElement('td'); if (cls) td.className = cls; td.textContent = txt; tr.append(td); return td; };
+      cell(String(r.rank));
+      const n = cell(r.name); if (+r.rank === 1) { n.style.fontWeight = 600; n.prepend('★ '); }
+      cell(r.family, 'fam');
+      const t = cell(P(+r.total), 'n'); t.className = 'n ' + (+r.total >= 0 ? 'good' : 'bad');
+      const bc = document.createElement('td'); const b = document.createElement('span'); b.className = 'bar';
+      b.style.width = `${Math.round((Math.abs(+r.total) / max) * 90)}px`;
+      b.style.background = +r.rank === 1 ? c.win : r.key === 'bh_spus' ? c.b : +r.total >= 0 ? 'var(--cds-chart-muted)' : 'var(--cds-chart-status-critical)';
+      bc.append(b); tr.append(bc);
+      cell(F2(+r.sharpe), 'n'); cell(P0(+r.maxdd), 'n'); cell(P0(+r.vol), 'n'); cell(d3.format('.1f')(+r.turnover), 'n');
+      tr.onclick = () => { if (+r.rank === 1 || r.key === 'bh_spus') return; window.ipSel = r.key; ['equity', 'eq-legend', 'board', 'pick', 'dd'].forEach((d) => dash.draw(d)); document.getElementById('equity')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+      return tr;
+    }));
+  });
+
+  // ---------- scatter
+  dash.draw('scatter', (el) => {
+    const st = ok('strategies');
+    if (!st) { el.textContent = '—'; return; }
+    el.replaceChildren();
+    const c = C();
+    const W = el.clientWidth || 400, H = 300, m = { t: 14, r: 16, b: 34, l: 46 };
+    const x = d3.scaleLinear().domain([0, d3.max(st, (d) => +d.vol) * 1.08]).range([m.l, W - m.r]);
+    const y = d3.scaleLinear().domain(d3.extent(st, (d) => +d.total)).nice().range([H - m.b, m.t]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'العائد مقابل التذبذب لكل استراتيجية');
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat(''));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('.0%')));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d3.format('.0%')));
+    svg.append('text').attr('x', W - m.r).attr('y', H - 4).attr('text-anchor', 'end').text('التذبذب السنوي ←');
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
+    const col = (d) => (+d.rank === 1 ? c.win : d.key === 'bh_spus' ? c.b : 'var(--cds-chart-muted)');
+    const tip = d3.select(el).append('div').attr('class', 'tip').style('display', 'none');
+    svg.append('g').selectAll('circle').data(st).join('circle').attr('cx', (d) => x(+d.vol)).attr('cy', (d) => y(+d.total))
+      .attr('r', (d) => (+d.rank === 1 || d.key === 'bh_spus' ? 7 : 5)).style('fill', col).attr('opacity', 0.9)
+      .on('pointerenter', (ev, d) => {
+        tip.style('display', null).replaceChildren();
+        tip.append('div').style('font-weight', 600).text(`${d.rank}. ${d.name}`);
+        [['العائد', P(+d.total)], ['التذبذب', P0(+d.vol)], ['شارب', F2(+d.sharpe)]].forEach(([a, b]) => { const r = tip.append('div').attr('class', 'row'); r.append('span').text(a); r.append('span').attr('class', 'num').text(b); });
+        const bw = el.clientWidth, sx = (x(+d.vol) / W) * bw, sy = (y(+d.total) / H) * el.clientHeight;
+        tip.style('left', `${sx > bw / 2 ? sx - 180 : sx + 12}px`).style('top', `${Math.max(0, sy - 30)}px`);
+      })
+      .on('pointerleave', () => tip.style('display', 'none'));
+    const lab = st.filter((d) => +d.rank <= 3 || d.key === 'bh_spus');
+    svg.append('g').selectAll('text').data(lab).join('text').attr('x', (d) => x(+d.vol) + (x(+d.vol) > W * 0.7 ? -10 : 10))
+      .attr('text-anchor', (d) => (x(+d.vol) > W * 0.7 ? 'end' : 'start')).attr('y', (d) => y(+d.total) + 4)
+      .style('fill', 'var(--color-fg)').style('font-size', '11px').attr('direction', 'rtl').text((d) => (d.key === 'bh_spus' ? 'SPUS' : `#${d.rank}`));
+  });
+
+  // ---------- drawdown
+  dash.draw('dd', (el) => {
+    const nav = ok('nav'), st = ok('strategies');
+    if (!nav || !st) { el.textContent = '—'; return; }
+    el.replaceChildren();
+    const c = C();
+    const winKey = st.find((r) => +r.rank === 1).key;
+    const keys = [[winKey, c.win], ['bh_spus', c.b], [window.ipSel, c.sel]];
+    const W = el.clientWidth || 400, H = 300, m = { t: 14, r: 16, b: 26, l: 46 };
+    const ser = keys.map(([k, col]) => ({ k, col, v: nav.filter((d) => d.key === k).map((d) => ({ t: parse(d.date), y: +d.dd / 100 })) }));
+    const x = d3.scaleUtc().domain(d3.extent(ser[0].v, (d) => d.t)).range([m.l, W - m.r]);
+    const y = d3.scaleLinear().domain([d3.min(ser, (s) => d3.min(s.v, (d) => d.y)) * 1.1, 0]).range([H - m.b, m.t]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'التراجع من القمة للاستراتيجية الفائزة و SPUS');
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat(''));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 450 ? 3 : 5).tickFormat(d3.utcFormat('%b %y')));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d3.format('.0%')));
+    const area = d3.area().x((d) => x(d.t)).y0(y(0)).y1((d) => y(d.y));
+    const line = d3.line().x((d) => x(d.t)).y((d) => y(d.y));
+    svg.append('g').selectAll('path.a').data(ser.slice(0, 2)).join('path').attr('d', (s) => area(s.v)).style('fill', (s) => s.col).attr('opacity', 0.12);
+    svg.append('g').selectAll('path.l').data(ser).join('path').attr('d', (s) => line(s.v)).attr('fill', 'none').style('stroke', (s) => s.col).attr('stroke-width', 1.8);
+    const tip = d3.select(el).append('div').attr('class', 'tip').style('display', 'none');
+    const dates = ser[0].v.map((d) => d.t);
+    const names = Object.fromEntries(st.map((r) => [r.key, r.name]));
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev); const i = Math.max(0, Math.min(dates.length - 1, d3.bisectCenter(dates, x.invert(px))));
+        tip.style('display', null).replaceChildren(); tip.append('div').style('font-weight', 600).text(`أسبوع ${fmtD(dates[i])}`);
+        ser.forEach((s) => { const r = tip.append('div').attr('class', 'row'); const a = r.append('span'); a.append('span').attr('class', 'sw').style('background', s.col); a.append('span').text(names[s.k]); r.append('span').attr('class', 'num').text(P0(s.v[i].y)); });
+        const bw = el.clientWidth, sx = (x(dates[i]) / W) * bw; tip.style('left', `${sx > bw / 2 ? sx - 240 : sx + 10}px`).style('top', '10px');
+      })
+      .on('pointerleave', () => tip.style('display', 'none'));
+  });
+
+  // ---------- holdings
+  dash.draw('holdings', (el) => {
+    const h = ok('holdings');
+    if (!h) { el.textContent = '—'; return; }
+    el.replaceChildren();
+    const wrap = d3.select(el).style('direction', 'rtl').append('div').style('display', 'grid').style('gap', '10px');
+    h.forEach((r) => {
+      const row = wrap.append('div').style('display', 'grid').style('grid-template-columns', 'minmax(90px,auto) 1fr auto').style('gap', '10px').style('align-items', 'center');
+      row.append('span').text(`${r.name} (${r.ticker})`);
+      const tr = row.append('span').style('background', 'var(--cds-chart-grid)').style('height', '10px').style('border-radius', '5px').style('overflow', 'hidden');
+      tr.append('span').style('display', 'block').style('height', '100%').style('width', `${(+r.weight * 100).toFixed(1)}%`).style('background', dash.colors[0]);
+      row.append('b').attr('class', 'num').attr('data-source', 'holdings').attr('data-field', 'weight').attr('data-where', `ticker=${r.ticker}`).text(P0(+r.weight));
+    });
+  });
+
+  // ---------- heatmap
+  dash.draw('heat', (el) => {
+    const g = ok('grid'), st = ok('strategies');
+    if (!g || !st) { el.textContent = '—'; return; }
+    el.replaceChildren();
+    const bench = +st.find((s) => s.key === 'bh_spus').total;
+    const lbs = [...new Set(g.map((d) => +d.lookback))].sort((a, b) => a - b), tops = [...new Set(g.map((d) => +d.top))].sort((a, b) => a - b);
+    el.style.gridTemplateColumns = `56px repeat(${tops.length}, 1fr)`;
+    const mx = d3.max(g, (d) => Math.abs(+d.total - bench));
+    const add = (cls, txt) => { const d = document.createElement('div'); d.className = cls; d.textContent = txt; el.append(d); return d; };
+    add('lab', '');
+    tops.forEach((t) => add('lab', `أفضل ${t}`));
+    lbs.forEach((lb) => {
+      add('lab', `${lb} أسابيع`);
+      tops.forEach((t) => {
+        const r = g.find((d) => +d.lookback === lb && +d.top === t);
+        const c = add('c' + (lb === 4 && t === 3 ? ' me' : ''), P(+r.total));
+        const above = +r.total > bench, a = Math.abs(+r.total - bench) / mx;
+        c.style.background = `color-mix(in srgb, ${above ? dash.colors[0] : 'var(--cds-chart-status-critical)'} ${Math.round(12 + a * 60)}%, transparent)`;
+        c.dataset.source = 'grid'; c.dataset.field = 'total'; c.dataset.where = `lookback=${lb}&top=${t}`;
+      });
+    });
+  });
+
+  // ---------- costs
+  dash.draw('costs', (el) => {
+    const cs = ok('costs');
+    if (!cs) { el.textContent = '—'; return; }
+    el.replaceChildren();
+    const W = el.clientWidth || 360, H = 200, m = { t: 22, r: 10, b: 30, l: 10 };
+    const x = d3.scaleBand().domain(cs.map((d) => String(d.bps))).range([m.l, W - m.r]).padding(0.3);
+    const y = d3.scaleLinear().domain([0, d3.max(cs, (d) => +d.total)]).range([H - m.b, m.t]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'العائد حسب تكلفة التداول');
+    svg.append('g').selectAll('rect').data(cs).join('rect').attr('x', (d) => x(String(d.bps))).attr('width', x.bandwidth()).attr('y', (d) => y(+d.total)).attr('height', (d) => y(0) - y(+d.total)).attr('rx', 3)
+      .style('fill', (d) => (+d.bps === 10 ? dash.colors[0] : 'var(--cds-chart-muted)'));
+    svg.append('g').selectAll('text.v').data(cs).join('text').attr('x', (d) => x(String(d.bps)) + x.bandwidth() / 2).attr('y', (d) => y(+d.total) - 6).attr('text-anchor', 'middle')
+      .style('fill', 'var(--color-fg)').text((d) => P(+d.total));
+    svg.append('g').selectAll('text.k').data(cs).join('text').attr('x', (d) => x(String(d.bps)) + x.bandwidth() / 2).attr('y', H - 10).attr('text-anchor', 'middle').text((d) => `${(d.bps / 100).toFixed(2)}%`);
+  });
+
+  // ---------- assets table with sparklines
+  dash.draw('assets', (tb) => {
+    const a = ok('assets'), px = ok('prices');
+    if (!a) { tb.replaceChildren(); return; }
+    const start = parse('2025-11-17');
+    const byT = px ? d3.group(px.filter((d) => parse(d.date) >= start), (d) => d.ticker) : new Map();
+    tb.replaceChildren(...[...a].sort((p, q) => +q.ret - +p.ret).map((r) => {
+      const tr = document.createElement('tr'); tr.dataset.key = r.ticker; tr.style.cursor = 'default';
+      const cell = (txt, cls) => { const td = document.createElement('td'); if (cls) td.className = cls; td.textContent = txt; tr.append(td); return td; };
+      cell(r.ticker).style.fontWeight = 600; cell(r.name); cell(r.type, 'fam'); cell(r.sector, 'fam');
+      const sp = document.createElement('td'); tr.append(sp);
+      const s = (byT.get(r.ticker) || []).map((d) => +d.close);
+      if (s.length > 1) {
+        const w = 90, h = 24, x = d3.scaleLinear().domain([0, s.length - 1]).range([2, w - 2]), y = d3.scaleLinear().domain(d3.extent(s)).range([h - 2, 2]);
+        const svg = d3.select(sp).append('svg').attr('width', w).attr('height', h).style('direction', 'ltr').attr('role', 'img').attr('aria-label', `مسار سعر ${r.ticker}`);
+        svg.append('path').attr('d', d3.line().x((_, i) => x(i)).y((d) => y(d))(s)).attr('fill', 'none').style('stroke', +r.ret >= 0 ? 'var(--color-ok)' : 'var(--color-bad)').attr('stroke-width', 1.4);
+        svg.append('circle').attr('cx', x(s.length - 1)).attr('cy', y(s.at(-1))).attr('r', 2.2).style('fill', +r.ret >= 0 ? 'var(--color-ok)' : 'var(--color-bad)');
+      }
+      cell(P(+r.ret), 'n ' + (+r.ret >= 0 ? 'good' : 'bad')); cell(P0(+r.vol), 'n'); cell(P0(+r.maxdd), 'n');
+      return tr;
+    }));
+  });
+})();
+</script>
