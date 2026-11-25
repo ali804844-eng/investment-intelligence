@@ -1,6 +1,6 @@
 <meta name="dash-one-writer">
 <style>
-  .ip { direction: rtl; font-family: var(--font-anthropic-sans), "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif; display: grid; gap: var(--cds-gap-xl); color: var(--color-fg); }
+  .ip { --ip-c0: var(--cds-chart-1, #2a78d6); --ip-c1: var(--cds-chart-2, #e07a1f); direction: rtl; font-family: var(--font-anthropic-sans), "Noto Sans Arabic", "Segoe UI", Tahoma, sans-serif; display: grid; gap: var(--cds-gap-xl); color: var(--color-fg); }
   .ip h1 { font-family: var(--font-anthropic-serif), "Noto Naskh Arabic", serif; font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
   .ip h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; text-wrap: balance; }
   .ip p { margin: 0; line-height: 1.7; max-width: 70ch; }
@@ -58,58 +58,94 @@
 <div class="ip" data-read lang="ar">
 
   <header class="head" id="top">
-    <span class="eyebrow">اختبار خلفي · آخر 52 أسبوعاً (17 نوفمبر 2025 – 16 نوفمبر 2026) · 13 سهماً وصندوقاً متوافقاً مع الشريعة · 20 استراتيجية</span>
+    <span class="eyebrow">بحث استثماري · 12 سهماً وصندوقاً متوافقاً مع الشريعة · 21 استراتيجية · فترتا اختبار: 2020-2024 و2025-2026</span>
     <h1>محفظة الأسهم والصناديق الإسلامية العالمية</h1>
-    <p class="lede">الاستراتيجية الأفضل أداءً خلال السنة الماضية هي <b data-draw="w-name" data-source="strategies" data-field="name" data-where="rank=1">—</b>، وحققت عائداً قدره <b class="num good" data-draw="w-total" data-source="strategies" data-field="total" data-where="rank=1">—</b> بعد التكاليف، مقابل <b class="num" data-draw="b-total" data-source="strategies" data-field="total" data-where="key=bh_spus">—</b> فقط لو اشتريت صندوق SPUS واحتفظت به.</p>
+    <p class="lede">على خمس سنوات لم تُستخدم في تصميمها (2020-2024)، حققت استراتيجية <b>الدرع التكيفي</b> عائداً قدره <b class="num good" data-draw="o-s-total" data-source="oos_summary" data-field="total" data-where="key=shield_v2">—</b> مقابل <b class="num" data-draw="o-b-total" data-source="oos_summary" data-field="total" data-where="key=bh_spus">—</b> لصندوق SPUS، بأقصى تراجع <b class="num" data-draw="o-s-dd" data-source="oos_summary" data-field="maxdd" data-where="key=shield_v2">—</b> مقابل <b class="num bad" data-draw="o-b-dd" data-source="oos_summary" data-field="maxdd" data-where="key=bh_spus">—</b>.</p>
   </header>
 
-  <section class="sec" id="winner">
+  <section class="sec" id="shield">
     <div class="card winner">
-      <span class="badge ok">★ الاستراتيجية الفائزة</span>
-      <h2 data-draw="w-name2" data-source="strategies" data-field="name" data-where="rank=1">—</h2>
-      <p data-draw="w-desc" data-source="strategies" data-field="desc" data-where="rank=1">—</p>
+      <span class="badge ok">★ الاستراتيجية الموصى بها</span>
+      <h2>الدرع التكيفي</h2>
+      <p>بُنيت من أخطاء الاستراتيجيات العشرين الأصلية، ثم اختُبرت بقواعدها كما هي على 2020-2024 التي تشمل انهيار كورونا وهبوط 2022.</p>
       <div class="tiles">
-        <div class="tile">
-          <span class="muted">العائد الكلي (52 أسبوعاً)</span>
-          <span class="big" data-draw="k-total" data-source="strategies" data-field="total" data-where="rank=1">—</span>
-          <span class="muted">الفارق عن SPUS: <b class="num good" data-draw="k-edge" data-source="edge">—</b></span>
-        </div>
-        <div class="tile">
-          <span class="muted">نسبة شارب</span>
-          <span class="big" data-draw="k-sharpe" data-source="strategies" data-field="sharpe" data-where="rank=1">—</span>
-          <span class="muted">العائد الزائد لكل وحدة مخاطرة. فوق 1 تعتبر جيدة</span>
-        </div>
-        <div class="tile">
-          <span class="muted">أقصى تراجع</span>
-          <span class="big bad" data-draw="k-dd" data-source="strategies" data-field="maxdd" data-where="rank=1">—</span>
-          <span class="muted">أسوأ هبوط من قمة إلى قاع خلال السنة</span>
-        </div>
-        <div class="tile">
-          <span class="muted">التذبذب السنوي</span>
-          <span class="big" data-draw="k-vol" data-source="strategies" data-field="vol" data-where="rank=1">—</span>
-          <span class="muted">مقابل <b class="num" data-draw="k-bvol" data-source="strategies" data-field="vol" data-where="key=bh_spus">—</b> لصندوق SPUS</span>
-        </div>
+        <div class="tile"><span class="muted">العائد السنوي المركب 2020-2024</span><span class="big" data-draw="k2-cagr" data-source="oos_summary" data-field="cagr" data-where="key=shield_v2">—</span><span class="muted">SPUS: <b class="num" data-draw="k2-bcagr" data-source="oos_summary" data-field="cagr" data-where="key=bh_spus">—</b></span></div>
+        <div class="tile"><span class="muted">التذبذب السنوي</span><span class="big" data-draw="k2-vol" data-source="oos_summary" data-field="vol" data-where="key=shield_v2">—</span><span class="muted">SPUS: <b class="num" data-draw="k2-bvol" data-source="oos_summary" data-field="vol" data-where="key=bh_spus">—</b></span></div>
+        <div class="tile"><span class="muted">نسبة شارب</span><span class="big" data-draw="k2-sharpe" data-source="oos_summary" data-field="sharpe" data-where="key=shield_v2">—</span><span class="muted">SPUS: <b class="num" data-draw="k2-bsharpe" data-source="oos_summary" data-field="sharpe" data-where="key=bh_spus">—</b></span></div>
+        <div class="tile"><span class="muted">2025-2026 (الفترة الأصلية)</span><span class="big" data-draw="k2-t26" data-source="timing" data-field="total" data-where="key=shield_v2">—</span><span class="muted">SPUS: <b class="num" data-draw="k2-bt26" data-source="timing" data-field="total" data-where="key=bh_spus">—</b></span></div>
       </div>
       <div class="two">
         <div class="sec">
-          <h3 class="eyebrow" style="margin:0">كيف تعمل؟</h3>
+          <h3 class="eyebrow" style="margin:0">قواعدها</h3>
           <ol class="steps">
-            <li>كل 4 أسابيع نقيس أداء الأصول الـ13 خلال آخر 4 أسابيع.</li>
-            <li>نشتري أقوى 3 أصول بأوزان متساوية (ثلث لكل أصل).</li>
-            <li>إن لم يكن أي أصل رابحاً، ننقل المحفظة كاملة إلى صندوق الصكوك SPSK.</li>
-            <li>نكرر العملية مع خصم تكلفة تداول 0.10% على كل عملية.</li>
+            <li>توزيع متساوٍ على كل الأسهم والصناديق، بلا محاولة اختيار "الأفضل".</li>
+            <li>الأصل الذي سعره تحت متوسطه لـ20 أسبوعاً يأخذ نصف وزنه فقط.</li>
+            <li>إذا كان أقل من نصف الأصول فوق متوسطه، تنخفض الأسهم إلى النصف، وإلى الربع إذا كان أقل من الربع.</li>
+            <li>المال الخامل يذهب للصكوك فقط إذا كانت صاعدة، وإلا يبقى نقداً.</li>
+            <li>المحفظة 4 شرائح، كل شريحة يُعاد توازنها في أسبوع مختلف من الشهر، فلا يتحكم يوم واحد في النتيجة.</li>
           </ol>
         </div>
-        <div class="sec" id="holdings">
-          <h3 class="eyebrow" style="margin:0">مكونات المحفظة في نهاية فترة الاختبار</h3>
-          <div class="chart sm" data-draw="holdings" data-source="holdings" style="min-height:120px"></div>
+        <div class="sec">
+          <h3 class="eyebrow" style="margin:0">أداؤها سنة بسنة مقابل SPUS</h3>
+          <div class="legend"><span><i style="background:var(--ip-c0)"></i>الدرع التكيفي</span><span><i style="background:var(--ip-c1)"></i>SPUS</span></div>
+          <div class="chart sm" data-draw="years" data-source="oos_summary"></div>
         </div>
       </div>
     </div>
   </section>
 
+  <section class="sec" id="oos">
+    <h2>نمو 100 دولار من يناير 2020 حتى ديسمبر 2024</h2>
+    <div class="legend"><span><i style="background:var(--ip-c0)"></i>الدرع التكيفي</span><span><i style="background:var(--ip-c1)"></i>شراء SPUS والاحتفاظ به</span><span><i style="background:var(--cds-chart-muted)"></i>الأسهم السبعة بأوزان متساوية</span></div>
+    <div class="chart" data-draw="oos-eq" data-source="oos_nav"></div>
+    <div class="chart sm" data-draw="oos-dd" data-source="oos_nav"></div>
+    <p class="muted">الرسم السفلي: التراجع من القمة. ظلال الفترات: انهيار كورونا (فبراير-مارس 2020) وهبوط 2022.</p>
+  </section>
+
+  <section class="sec" id="oos-board">
+    <h2>كل الاستراتيجيات على 2020-2024</h2>
+    <div class="warnbox"><p><b>انحياز في الاختيار:</b> الأسهم السبعة اختيرت في 2026 ونحن نعرف أنها نجحت؛ NVDA ارتفع أكثر من 2000% في هذه الفترة. لذلك تبدو الاستراتيجيات المركّزة في الأسهم (أعلى الجدول) أفضل مما كانت ستكون فعلاً. عمودا "أسوأ توقيت" و"أفضل توقيت" يبيّنان نتيجة الاستراتيجية نفسها عند البدء في أسابيع مختلفة من الشهر.</p></div>
+    <div class="tbl">
+      <table data-source="oos_summary" data-row-key="key" id="oos-table">
+        <thead><tr>
+          <th data-field="rank">#</th><th data-field="name">الاستراتيجية</th>
+          <th class="n" data-field="total">العائد الكلي</th><th class="n" data-field="cagr">سنوي</th>
+          <th class="n" data-field="maxdd">أقصى تراجع</th><th class="n" data-field="sharpe">شارب</th>
+          <th class="n" data-field="off_min">أسوأ توقيت</th><th class="n" data-field="off_max">أفضل توقيت</th>
+        </tr></thead>
+        <tbody data-draw="oos-board"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec" id="timing">
+    <h2>لماذا لم نعتمد الفائز الأصلي؟ حساسية التوقيت في 2025-2026</h2>
+    <p class="muted">الخط يمتد من أسوأ إلى أفضل نتيجة للاستراتيجية حسب أسبوع البدء، والنقطة هي المتوسط. خط طويل يعني أن النتيجة حظ في التوقيت. فائزنا الأصلي (+36%) كان متوسطه <b class="num" data-draw="t-m43" data-source="timing" data-field="off_mean" data-where="key=mom_4_3m">—</b> فقط.</p>
+    <div class="chart" data-draw="timing" data-source="timing" style="min-height:520px"></div>
+  </section>
+
+  <section class="sec" id="lessons">
+    <h2>الدروس: من أخطاء الاستراتيجيات إلى قواعد الدرع</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>الخطأ</th><th>أين ظهر</th><th>القاعدة التي تعالجه</th></tr></thead>
+      <tbody>
+        <tr><td>حظ في يوم إعادة التوازن</td><td class="fam">الزخم الشهري، أعلى شارب</td><td>4 شرائح بأسابيع مختلفة</td></tr>
+        <tr><td>تركيز في 1-3 أصول</td><td class="fam">نسخ الزخم</td><td>توزيع على كل الأصول</td></tr>
+        <tr><td>تحويل كامل بين الأسهم والصكوك</td><td class="fam">تقاطع المتوسطات (‎-11.7%‎)</td><td>تخفيض تدريجي للتعرض</td></tr>
+        <tr><td>شراء الأصول المنهارة</td><td class="fam">الارتداد للمتوسط</td><td>نصف وزن تحت المتوسط</td></tr>
+        <tr><td>تداول مفرط وتكاليف</td><td class="fam">الزخم الأسبوعي، الارتداد</td><td>إعادة توازن شهرية وتداول عند انحراف أكبر من 2% فقط</td></tr>
+        <tr><td>هبوط كل الأصول معاً</td><td class="fam">أدنى تباين، تكافؤ المخاطر</td><td>خفض التعرض حسب عدد الأصول الصاعدة</td></tr>
+        <tr><td>الملاذ الآمن خاسر</td><td class="fam">الاستراتيجيات الدفاعية</td><td>الصكوك فقط إذا كانت صاعدة</td></tr>
+        <tr><td>إشارة الاختيار لا تعمل</td><td class="fam">كل نسخ الزخم</td><td>حذف الاختيار كلياً</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <h2 style="margin-top:var(--cds-gap-lg)">الدراسة الأصلية: 20 استراتيجية على 2025-2026</h2>
+  <p class="muted" style="margin-top:calc(-1*var(--cds-gap-md))">النتائج أدناه بأسعار لا تشمل التوزيعات، وهي نقطة البداية التي كشفت الأخطاء. الاستراتيجية الأولى في الترتيب حققت أعلى عائد، لكن الاختبارات لاحقاً أثبتت أن نتيجتها تعتمد على الحظ في التوقيت.</p>
+
   <section class="sec" id="equity">
-    <h2>نمو 100 دولار في كل استراتيجية</h2>
+    <h3 style="margin:0">نمو 100 دولار في كل استراتيجية (2025-2026)</h3>
     <div class="ctrl">
       <label class="muted" for="ip-pick">قارن مع:</label>
       <select class="dash-select" id="ip-pick" data-draw="pick" data-source="strategies" aria-label="اختر استراتيجية للمقارنة"></select>
@@ -120,7 +156,7 @@
   </section>
 
   <section class="sec" id="board">
-    <h2>ترتيب الاستراتيجيات العشرين</h2>
+    <h3 style="margin:0">ترتيب الاستراتيجيات العشرين (2025-2026)</h3>
     <p class="muted">الترتيب بدرجة مركبة: 40% نسبة شارب، 30% العائد، 20% نسبة كالمار (العائد ÷ أقصى تراجع)، 10% أقصى تراجع. اضغط على أي صف لعرضه في الرسم أعلاه.</p>
     <div class="tbl">
       <table data-source="strategies" data-row-key="key" id="board-table">
@@ -190,12 +226,13 @@
   </section>
 
   <div class="warnbox">
-    <p><b>تنبيه مهم:</b> هذه نتائج اختبار تاريخي على سنة واحدة فقط، واختيار "الأفضل" من بين 20 استراتيجية على نفس البيانات يميل لتضخيم النتيجة. الأداء الماضي لا يضمن المستقبل، والتوافق الشرعي يجب التحقق منه دورياً لدى جهة رقابة شرعية لأن نسب الديون والإيرادات تتغير. هذا تحليل بحثي وليس توصية استثمارية.</p>
+    <p><b>تنبيه مهم:</b> هذه نتائج اختبار تاريخي. الدرع التكيفي اختُبر على فترتين مختلفتين، لكن قائمة الأسهم نفسها مختارة بأثر رجعي. الأداء الماضي لا يضمن المستقبل، والتوافق الشرعي يجب التحقق منه دورياً لدى جهة رقابة شرعية لأن نسب الديون والإيرادات تتغير. هذا تحليل بحثي وليس توصية استثمارية.</p>
   </div>
 
   <details id="method">
     <summary>المنهجية والتعريفات</summary>
     <ul>
+      <li><b>اختبار 2020-2024:</b> بيانات أسبوعية من يوليو 2019 حتى ديسمبر 2024، مع إضافة تقريبية للتوزيعات. صندوق AMANX مستبعد لأن توزيعاته الرأسمالية السنوية تشوّه سعره. UMMA يدخل من 2022 وSPRE من 2021. قواعد الدرع ثُبّتت قبل رؤية هذه البيانات.</li>
       <li><b>البيانات:</b> أسعار إغلاق أسبوعية من Twelve Data من 5 مايو 2025 إلى 16 نوفمبر 2026. الأسابيع قبل 17 نوفمبر 2025 تُستخدم فقط لحساب الإشارات.</li>
       <li><b>بلا تحيز للمستقبل:</b> القرار يُتخذ عند إغلاق الأسبوع ويُطبّق على عائد الأسبوع التالي.</li>
       <li><b>التكاليف:</b> 0.10% على كل وحدة دوران. الدوران = مجموع التغيرات في الأوزان؛ دوران 17 يعني أن المحفظة تبدلت كلياً نحو 8 مرات.</li>
@@ -510,6 +547,116 @@
       cell(P(+r.ret), 'n ' + (+r.ret >= 0 ? 'good' : 'bad')); cell(P0(+r.vol), 'n'); cell(P0(+r.maxdd), 'n');
       return tr;
     }));
+  });
+})();
+</script>
+
+<script>
+(() => {
+  const P = d3.format('+.1%'), P0 = d3.format('.1%'), F2 = d3.format('.2f');
+  const ok = (id) => { const r = dash.data(id); return r.status === 'ok' ? r.data : null; };
+  const parse = d3.utcParse('%Y-%m-%d'), fmtD = d3.utcFormat('%d/%m/%y');
+  const C0 = () => dash.colors[0], C1 = () => dash.colors[1];
+  const pick = (rows, k) => rows.find((r) => r.key === k);
+  const td = (name, src, key, field, fmt) => dash.draw(name, (el) => { const r = ok(src); const row = r && pick(r, key); el.textContent = row && row[field] != null ? fmt(+row[field]) : '—'; });
+  td('o-s-total', 'oos_summary', 'shield_v2', 'total', P); td('o-b-total', 'oos_summary', 'bh_spus', 'total', P);
+  td('o-s-dd', 'oos_summary', 'shield_v2', 'maxdd', P0); td('o-b-dd', 'oos_summary', 'bh_spus', 'maxdd', P0);
+  td('k2-cagr', 'oos_summary', 'shield_v2', 'cagr', P0); td('k2-bcagr', 'oos_summary', 'bh_spus', 'cagr', P0);
+  td('k2-vol', 'oos_summary', 'shield_v2', 'vol', P0); td('k2-bvol', 'oos_summary', 'bh_spus', 'vol', P0);
+  td('k2-sharpe', 'oos_summary', 'shield_v2', 'sharpe', F2); td('k2-bsharpe', 'oos_summary', 'bh_spus', 'sharpe', F2);
+  td('k2-t26', 'timing', 'shield_v2', 'total', P); td('k2-bt26', 'timing', 'bh_spus', 'total', P);
+  td('t-m43', 'timing', 'mom_4_3m', 'off_mean', P);
+  document.querySelectorAll('.ip').forEach((e) => { e.style.setProperty('--ip-c0', dash.colors[0]); e.style.setProperty('--ip-c1', dash.colors[1]); });
+  const svgOf = (el, W, H, label) => d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', label);
+
+  dash.draw('years', (el) => {
+    const r = ok('oos_summary'); if (!r) { el.textContent = '—'; return; } el.replaceChildren();
+    const s = pick(r, 'shield_v2'), b = pick(r, 'bh_spus'), yrs = ['2020', '2021', '2022', '2023', '2024'];
+    const W = el.clientWidth || 360, H = 220, m = { t: 18, r: 6, b: 24, l: 6 };
+    const x = d3.scaleBand().domain(yrs).range([m.l, W - m.r]).padding(0.25), x2 = d3.scaleBand().domain(['s', 'b']).range([0, x.bandwidth()]).padding(0.1);
+    const vals = yrs.flatMap((y) => [+s['y' + y], +b['y' + y]]);
+    const y = d3.scaleLinear().domain([Math.min(0, d3.min(vals)) * 1.25, d3.max(vals) * 1.2]).range([H - m.b, m.t]);
+    const svg = svgOf(el, W, H, 'العائد السنوي للدرع التكيفي مقابل SPUS 2020-2024');
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--cds-chart-axis)');
+    yrs.forEach((yr) => [['s', +s['y' + yr], C0()], ['b', +b['y' + yr], C1()]].forEach(([k, v, c]) => {
+      const X = x(yr) + x2(k);
+      svg.append('rect').attr('x', X).attr('width', x2.bandwidth()).attr('y', Math.min(y(v), y(0))).attr('height', Math.abs(y(v) - y(0))).attr('rx', 2).style('fill', c);
+      svg.append('text').attr('x', X + x2.bandwidth() / 2).attr('y', v >= 0 ? y(v) - 4 : y(v) + 11).attr('text-anchor', 'middle').style('font-size', '9.5px').style('fill', 'var(--color-fg)').text(d3.format('.0%')(v));
+    }));
+    svg.append('g').selectAll('text.k').data(yrs).join('text').attr('x', (d) => x(d) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').text((d) => d);
+  });
+
+  const series = () => { const n = ok('oos_nav'); if (!n) return null; return d3.groups(n, (d) => d.key).map(([k, v]) => ({ k, v: v.map((d) => ({ t: parse(d.date), y: +d.nav })) })); };
+  const col = (k) => (k === 'shield_v2' ? C0() : k === 'bh_spus' ? C1() : 'var(--cds-chart-muted)');
+  const nm = { shield_v2: 'الدرع التكيفي', bh_spus: 'SPUS', stocks_ew: 'الأسهم السبعة' };
+  const crises = [['2020-02-17', '2020-03-23'], ['2021-12-27', '2022-10-10']];
+  const lineChart = (el, ser, H, yfmt, label, isDD) => {
+    el.replaceChildren();
+    const W = el.clientWidth || 600, m = { t: 12, r: isDD ? 16 : 52, b: 24, l: 46 };
+    const all = ser.flatMap((s) => s.v);
+    const x = d3.scaleUtc().domain(d3.extent(ser[0].v, (d) => d.t)).range([m.l, W - m.r]);
+    const y = d3.scaleLinear().domain(isDD ? [d3.min(all, (d) => d.y) * 1.08, 0] : d3.extent(all, (d) => d.y)).nice().range([H - m.b, m.t]);
+    const svg = svgOf(el, W, H, label);
+    crises.forEach(([a, b]) => svg.append('rect').attr('x', x(parse(a))).attr('width', x(parse(b)) - x(parse(a))).attr('y', m.t).attr('height', H - m.t - m.b).style('fill', 'var(--cds-chart-grid)').attr('opacity', 0.6));
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat(''));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 500 ? 4 : 6).tickFormat(d3.utcFormat('%Y')));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(yfmt));
+    const line = d3.line().x((d) => x(d.t)).y((d) => y(d.y));
+    const order = [...ser].sort((a, b) => (a.k === 'stocks_ew' ? -1 : 1) - (b.k === 'stocks_ew' ? -1 : 1));
+    svg.append('g').selectAll('path').data(order).join('path').attr('d', (s) => line(s.v)).attr('fill', 'none').style('stroke', (s) => col(s.k))
+      .attr('stroke-width', (s) => (s.k === 'stocks_ew' ? 1.3 : 2.2)).attr('stroke-dasharray', (s) => (s.k === 'stocks_ew' ? '4 3' : null));
+    if (!isDD) {
+      const ends = ser.map((s) => ({ k: s.k, y: y(s.v.at(-1).y), v: s.v.at(-1).y })).sort((a, b) => a.y - b.y);
+      for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 13) ends[i].y = ends[i - 1].y + 13;
+      svg.append('g').selectAll('text').data(ends).join('text').attr('x', W - m.r + 6).attr('y', (d) => d.y + 4).style('fill', (d) => col(d.k)).style('font-weight', 600).text((d) => `$${d.v.toFixed(0)}`);
+    }
+    const tip = d3.select(el).append('div').attr('class', 'tip').style('display', 'none');
+    const dates = ser[0].v.map((d) => d.t);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev); const i = Math.max(0, Math.min(dates.length - 1, d3.bisectCenter(dates, x.invert(px))));
+        tip.style('display', null).replaceChildren(); tip.append('div').style('font-weight', 600).text(`أسبوع ${fmtD(dates[i])}`);
+        ser.forEach((s) => { const r = tip.append('div').attr('class', 'row'); const a = r.append('span'); a.append('span').attr('class', 'sw').style('background', col(s.k)); a.append('span').text(nm[s.k]); r.append('span').attr('class', 'num').text(isDD ? P0(s.v[i].y) : `$${s.v[i].y.toFixed(0)}`); });
+        const bw = el.clientWidth, sx = (x(dates[i]) / W) * bw; tip.style('left', `${sx > bw / 2 ? sx - 210 : sx + 10}px`).style('top', '8px');
+      }).on('pointerleave', () => tip.style('display', 'none'));
+  };
+  dash.draw('oos-eq', (el) => { const s = series(); if (!s) { el.textContent = '—'; return; } lineChart(el, s, 320, (v) => `$${v}`, 'نمو 100 دولار 2020-2024: الدرع التكيفي و SPUS والأسهم السبعة', false); });
+  dash.draw('oos-dd', (el) => {
+    const s = series(); if (!s) { el.textContent = '—'; return; }
+    const dd = s.filter((q) => q.k !== 'stocks_ew').map((q) => { let pk = -Infinity; return { k: q.k, v: q.v.map((d) => { pk = Math.max(pk, d.y); return { t: d.t, y: d.y / pk - 1 }; }) }; });
+    lineChart(el, dd, 200, d3.format('.0%'), 'التراجع من القمة 2020-2024: الدرع التكيفي مقابل SPUS', true);
+  });
+
+  dash.draw('oos-board', (tb) => {
+    const r = ok('oos_summary'); if (!r) { tb.replaceChildren(); return; }
+    tb.replaceChildren(...r.map((row) => {
+      const tr = document.createElement('tr'); tr.dataset.key = row.key; tr.style.cursor = 'default';
+      if (row.key === 'shield_v2') tr.className = 'sel';
+      const cell = (t, c) => { const d = document.createElement('td'); if (c) d.className = c; d.textContent = t; tr.append(d); return d; };
+      cell(String(row.rank)); const n = cell(row.name); if (row.key === 'shield_v2') { n.style.fontWeight = 600; n.prepend('★ '); }
+      cell(P(+row.total), 'n good'); cell(P0(+row.cagr), 'n'); cell(P0(+row.maxdd), 'n'); cell(F2(+row.sharpe), 'n');
+      cell(P(+row.off_min), 'n'); cell(P(+row.off_max), 'n');
+      return tr;
+    }));
+  });
+
+  dash.draw('timing', (el) => {
+    const r = ok('timing'); if (!r) { el.textContent = '—'; return; } el.replaceChildren();
+    const W = el.clientWidth || 600, rowH = 24, m = { t: 10, r: 14, b: 26, l: Math.min(230, W * 0.45) };
+    const H = m.t + m.b + r.length * rowH;
+    const x = d3.scaleLinear().domain([d3.min(r, (d) => +d.off_min) - 0.03, d3.max(r, (d) => +d.off_max) + 0.03]).range([m.l, W - m.r]);
+    const svg = svgOf(el, W, H, 'نطاق عائد كل استراتيجية حسب أسبوع البدء في 2025-2026');
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(6).tickSize(-(H - m.t - m.b)).tickFormat(''));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(6).tickFormat(d3.format('.0%')));
+    svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', m.t).attr('y2', H - m.b).style('stroke', 'var(--cds-chart-reference)');
+    r.forEach((d, i) => {
+      const Y = m.t + i * rowH + rowH / 2, c = d.key === 'shield_v2' ? C0() : d.key === 'bh_spus' ? C1() : d.key === 'mom_4_3m' ? 'var(--cds-chart-status-critical)' : 'var(--cds-chart-muted)';
+      svg.append('text').attr('x', m.l - 8).attr('y', Y + 4).attr('text-anchor', 'end').attr('direction', 'rtl').style('fill', 'var(--color-fg)').style('font-weight', d.key === 'shield_v2' ? 700 : 400).text(d.name);
+      svg.append('line').attr('x1', x(+d.off_min)).attr('x2', x(+d.off_max)).attr('y1', Y).attr('y2', Y).style('stroke', c).attr('stroke-width', 5).attr('stroke-linecap', 'round').attr('opacity', 0.55);
+      svg.append('circle').attr('cx', x(+d.off_mean)).attr('cy', Y).attr('r', 4.5).style('fill', c);
+    });
+    // fit labels: shrink if needed
+    svg.selectAll('text[text-anchor=end]').each(function () { const w = this.getComputedTextLength(); if (w > m.l - 12) this.style.fontSize = `${Math.max(8, 11 * (m.l - 12) / w)}px`; });
   });
 })();
 </script>
