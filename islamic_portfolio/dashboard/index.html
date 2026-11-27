@@ -94,6 +94,47 @@
     </div>
   </section>
 
+  <section class="sec" id="funds">
+    <h2>مقارنة مع الصناديق الإسلامية: آخر 5 سنوات (نوفمبر 2021 – نوفمبر 2026)</h2>
+    <p>على نفس الفترة، حقق الدرع التكيفي <b class="num good" data-draw="f-sh" data-source="funds_summary" data-field="cagr" data-where="key=shield_v2">—</b> سنوياً، مقابل <b class="num" data-draw="f-spus" data-source="funds_summary" data-field="cagr" data-where="key=SPUS">—</b> لأكبر صندوق إسلامي أمريكي SPUS، و<b class="num" data-draw="f-amanx" data-source="funds_summary" data-field="cagr" data-where="key=AMANX">—</b> لصندوق أمانة للدخل. عوائد الصناديق فعلية بعد رسومها ومع إعادة استثمار التوزيعات، أما الاستراتيجيات فهي اختبار تاريخي بلا رسوم صناديق.</p>
+    <div class="legend"><span><i style="background:var(--ip-c0)"></i>الدرع التكيفي</span><span><i style="background:var(--ip-c1)"></i>SPUS</span><span><i style="background:var(--cds-chart-muted)"></i>صناديق أخرى</span><span><i style="background:var(--cds-chart-status-critical)"></i>مضاربة (زخم أسبوعي)</span></div>
+    <div class="chart" data-draw="funds-eq" data-source="funds_curves"></div>
+    <div class="tbl">
+      <table data-source="funds_summary" data-row-key="key" id="funds-table">
+        <thead><tr>
+          <th data-field="name">الصندوق / الاستراتيجية</th><th data-field="type">النوع</th>
+          <th class="n" data-field="cagr">سنوي</th><th class="n" data-field="total">5 سنوات</th>
+          <th class="n" data-field="maxdd">أقصى تراجع</th><th class="n" data-field="y2022">2022</th>
+          <th class="n" data-field="y2025">2025</th><th class="n" data-field="fee">الرسوم</th>
+        </tr></thead>
+        <tbody data-draw="funds-board"></tbody>
+      </table>
+    </div>
+    <p class="muted">ISWD مسعّر بالجنيه الإسترليني، لذلك تبدو سنة 2022 أفضل مما كانت بالدولار بسبب هبوط الجنيه. UMMA يبدأ فبراير 2022. صف المضاربة والأسهم السبعة مضخّم بانحياز اختيار الأسهم بأثر رجعي.</p>
+    <div class="two">
+      <div class="card">
+        <h3 class="eyebrow" style="margin:0">صناديق التحوط</h3>
+        <p>لا يوجد مؤشر عام ولا بيانات منشورة لصناديق تحوط إسلامية؛ هي قليلة جداً ومغلقة للمستثمرين المؤهلين. معظم صناديق التحوط التقليدية لا تتوافق مع الشريعة: بيع على المكشوف، رافعة بالدين، نقد بفائدة. للمقارنة فقط، مؤشر HFRI لصناديق التحوط العالمية:</p>
+        <div class="tbl"><table data-source="hedge_funds" data-row-key="year">
+          <thead><tr><th data-field="year">السنة</th><th class="n" data-field="hfri">HFRI</th><th data-field="source">المصدر</th></tr></thead>
+          <tbody data-draw="hedge"></tbody>
+        </table></div>
+        <p class="muted">في نفس السنوات حقق SPUS: <b class="num" data-draw="h-23" data-source="funds_summary" data-field="y2023" data-where="key=SPUS">—</b> و<b class="num" data-draw="h-24" data-source="funds_summary" data-field="y2024" data-where="key=SPUS">—</b> و<b class="num" data-draw="h-25" data-source="funds_summary" data-field="y2025" data-where="key=SPUS">—</b>.</p>
+      </div>
+      <div class="card">
+        <h3 class="eyebrow" style="margin:0">الخلاصة: متى وكيف وكم (إطار عام، ليس نصيحة شخصية)</h3>
+        <ol class="steps">
+          <li><b>النواة (أغلب الجزء المخصص للأسهم):</b> صندوق مؤشر إسلامي منخفض الرسوم (SPUS أو HLAL، أو عالمي مثل ISWD)، أو تطبيق قواعد الدرع التكيفي عليه لتقليل التراجعات.</li>
+          <li><b>الصناديق المُدارة:</b> أمانة للدخل مناسب لمن يريد تراجعات أقل؛ أمانة للنمو لم يتفوق على صناديق المؤشر.</li>
+          <li><b>الصكوك:</b> للأموال المطلوبة خلال 1-3 سنوات فقط؛ عائدها كان قرب الصفر في فترة رفع الفائدة.</li>
+          <li><b>المضاربة:</b> 5-10% كحد أقصى من مال تتحمل خسارته، لأن نتيجتها تعتمد على التوقيت.</li>
+          <li><b>صناديق التحوط والعقار الإسلامي:</b> لا ننصح بهما كجزء أساسي.</li>
+          <li><b>متى:</b> استثمار شهري منتظم بدل محاولة توقيت السوق؛ المبلغ الكبير يُقسَّم على 6-12 شهراً.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <section class="sec" id="oos">
     <h2>نمو 100 دولار من يناير 2020 حتى ديسمبر 2024</h2>
     <div class="legend"><span><i style="background:var(--ip-c0)"></i>الدرع التكيفي</span><span><i style="background:var(--ip-c1)"></i>شراء SPUS والاحتفاظ به</span><span><i style="background:var(--cds-chart-muted)"></i>الأسهم السبعة بأوزان متساوية</span></div>
@@ -657,6 +698,66 @@
     });
     // fit labels: shrink if needed
     svg.selectAll('text[text-anchor=end]').each(function () { const w = this.getComputedTextLength(); if (w > m.l - 12) this.style.fontSize = `${Math.max(8, 11 * (m.l - 12) / w)}px`; });
+  });
+})();
+</script>
+<script>
+(() => {
+  const P = d3.format('+.1%'), P0 = d3.format('.1%');
+  const ok = (id) => { const r = dash.data(id); return r.status === 'ok' ? r.data : null; };
+  const pick = (rows, k) => rows.find((r) => r.key === k);
+  const td = (name, key, field) => dash.draw(name, (el) => { const r = ok('funds_summary'); const row = r && pick(r, key); el.textContent = row && row[field] != null ? P0(+row[field]) : '—'; });
+  td('f-sh', 'shield_v2', 'cagr'); td('f-spus', 'SPUS', 'cagr'); td('f-amanx', 'AMANX', 'cagr');
+  td('h-23', 'SPUS', 'y2023'); td('h-24', 'SPUS', 'y2024'); td('h-25', 'SPUS', 'y2025');
+  const label = { shield_v2: 'الدرع', SPUS: 'SPUS', HLAL: 'HLAL', AMANX: 'أمانة دخل', AMAGX: 'أمانة نمو', SPSK: 'صكوك', mom_4_3: 'مضاربة' };
+  const col = (k) => (k === 'shield_v2' ? dash.colors[0] : k === 'SPUS' ? dash.colors[1] : k === 'mom_4_3' ? 'var(--cds-chart-status-critical)' : 'var(--cds-chart-muted)');
+  dash.draw('funds-eq', (el) => {
+    const c = ok('funds_curves'); if (!c) { el.textContent = '—'; return; } el.replaceChildren();
+    const parse = d3.utcParse('%Y-%m');
+    const ser = d3.groups(c, (d) => d.key).map(([k, v]) => ({ k, v: v.map((d) => ({ t: parse(d.month), y: +d.value })) }));
+    const W = el.clientWidth || 600, H = 330, m = { t: 12, r: 92, b: 24, l: 44 };
+    const x = d3.scaleUtc().domain(d3.extent(ser[0].v, (d) => d.t)).range([m.l, W - m.r]);
+    const y = d3.scaleLinear().domain(d3.extent(c, (d) => +d.value)).nice().range([H - m.b, m.t]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'نمو 100 دولار في الصناديق الإسلامية والدرع التكيفي منذ أكتوبر 2021');
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat(''));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(W < 500 ? 4 : 6).tickFormat(d3.utcFormat('%Y')));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat((v) => `$${v}`));
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(100)).attr('y2', y(100)).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
+    const line = d3.line().x((d) => x(d.t)).y((d) => y(d.y));
+    const hi = (k) => k === 'shield_v2' || k === 'SPUS' || k === 'mom_4_3';
+    svg.append('g').selectAll('path').data([...ser].sort((a, b) => hi(a.k) - hi(b.k))).join('path').attr('d', (s) => line(s.v)).attr('fill', 'none').style('stroke', (s) => col(s.k)).attr('stroke-width', (s) => (hi(s.k) ? 2.3 : 1.2)).attr('opacity', (s) => (hi(s.k) ? 1 : 0.8));
+    const ends = ser.map((s) => ({ k: s.k, y: y(s.v.at(-1).y), v: s.v.at(-1).y })).sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 12) ends[i].y = ends[i - 1].y + 12;
+    svg.append('g').selectAll('text').data(ends).join('text').attr('x', W - m.r + 5).attr('y', (d) => d.y + 4).style('fill', (d) => (hi(d.k) ? col(d.k) : 'var(--cds-text-secondary)')).style('font-weight', (d) => (hi(d.k) ? 600 : 400)).style('font-size', '10.5px').text((d) => `${label[d.k]} $${d.v.toFixed(0)}`);
+    const tip = d3.select(el).append('div').attr('class', 'tip').style('display', 'none');
+    const dates = ser[0].v.map((d) => d.t);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [px] = d3.pointer(ev); const i = Math.max(0, Math.min(dates.length - 1, d3.bisectCenter(dates, x.invert(px))));
+        tip.style('display', null).replaceChildren(); tip.append('div').style('font-weight', 600).text(d3.utcFormat('%m/%Y')(dates[i]));
+        [...ser].sort((a, b) => (b.v[i]?.y ?? 0) - (a.v[i]?.y ?? 0)).forEach((s) => { if (!s.v[i]) return; const r = tip.append('div').attr('class', 'row'); const a = r.append('span'); a.append('span').attr('class', 'sw').style('background', col(s.k)); a.append('span').text(label[s.k]); r.append('span').attr('class', 'num').text(`$${s.v[i].y.toFixed(0)}`); });
+        const bw = el.clientWidth, sx = (x(dates[i]) / W) * bw; tip.style('left', `${sx > bw / 2 ? sx - 190 : sx + 10}px`).style('top', '8px');
+      }).on('pointerleave', () => tip.style('display', 'none'));
+  });
+  dash.draw('funds-board', (tb) => {
+    const r = ok('funds_summary'); if (!r) { tb.replaceChildren(); return; }
+    tb.replaceChildren(...r.map((row) => {
+      const tr = document.createElement('tr'); tr.dataset.key = row.key; tr.style.cursor = 'default';
+      if (row.key === 'shield_v2') tr.className = 'sel';
+      const cell = (t, c) => { const d = document.createElement('td'); if (c) d.className = c; d.textContent = t; tr.append(d); return d; };
+      const n = cell(row.name); if (row.key === 'shield_v2') { n.style.fontWeight = 600; n.prepend('★ '); } if (row.kind === 'strategy') n.style.fontStyle = 'italic';
+      cell(row.type, 'fam');
+      const g = cell(P0(+row.cagr), 'n'); g.classList.add(+row.cagr >= 0 ? 'good' : 'bad');
+      cell(P(+row.total), 'n'); cell(P0(+row.maxdd), 'n');
+      cell(row.y2022 == null ? '—' : P(+row.y2022), 'n'); cell(row.y2025 == null ? '—' : P(+row.y2025), 'n');
+      cell(row.fee == null ? '—' : d3.format('.2%')(+row.fee), 'n');
+      return tr;
+    }));
+  });
+  dash.draw('hedge', (tb) => {
+    const r = ok('hedge_funds'); if (!r) { tb.replaceChildren(); return; }
+    tb.replaceChildren(...r.map((row) => { const tr = document.createElement('tr'); tr.dataset.key = row.year; tr.style.cursor = 'default';
+      [[row.year], [P(+row.hfri), 'n'], [row.source, 'fam']].forEach(([t, c]) => { const d = document.createElement('td'); if (c) d.className = c; d.textContent = t; tr.append(d); }); return tr; }));
   });
 })();
 </script>
